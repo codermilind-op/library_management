@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block heading %} Signup {% endblock heading %}
+
+{% block content %}
+
+<form class="w-2xl sm:w-1/2 max-w-xs flex flex-col mx-auto -mt-8 sm:-mt-12" action="/student/signup/" method="POST">
+  {% csrf_token %}
+  <div class="w-1/2  max-w-xs flex flex-col sm:flex-row mt-4  sm:items-center"></div>
+    <label class="text-xl" for="firstname">Name</label>
+    <input
+      class="px-2 py-1 bg-transparent border-white border-2 h-lg mt-2 rounded "
+      name="firstname"
+
+  </div>
+
+  <div class="w-1/2  max-w-xs flex flex-col sm:flex-row mt-4  sm:items-center"></div>
+  <label class="text-xl" for="studentID">StudentID</label>
+
+  <input
+    class="px-2 py-1 bg-transparent border-white border-2 h-lg mt-2 rounded "
+    name="studentID"
+
+  <p id="studentID-error" class="hidden text-red-400 py-1">ID either incomplete or exists</p>
+</div>
+</div>
+
+<div class="w-1/2  max-w-xs flex flex-col sm:flex-row mt-4  sm:items-center"></div>
+  <label class="text-xl" for="emailID">E-mail</label>
+
+  <input
+    class="px-2 py-1 bg-transparent border-white border-2 h-lg mt-2 rounded "
+    name="emailID"
+    type="text"
+
+  <p id="emailID-error" class="hidden text-red-400 py-1">ID either incomplete or exists</p>
+</div>
+
+  <div class="w-1/2 max-w-xs flex flex-col sm:flex-row mt-4 sm:items-center"></div>
+  <label class="text-xl" for="mobile">Phone</label>
+  <input
+    class="px-2 py-1 bg-transparent border-white border-2 mt-2  rounded "
+    name="mobile"
+
+</div>
+
+<div class="w-1/2 max-w-xs flex flex-col sm:flex-row mt-4 sm:items-center"></div>
+    <label class="text-xl" for="address">Address</label>
+    <input
+      class="px-2 py-1 bg-transparent border-white border-2 mt-2  rounded "
+      name="address"
+
+  </div>
+
+  <div class="w-1/2 max-w-xs flex flex-col sm:flex-row mt-4 sm:items-center"></div>
+    <label class="text-xl" for="college">College</label>
+    <input
+      class="px-2 py-1 bg-transparent border-white border-2 mt-2  rounded "
+      name="college"
+
+  </div>
+</div>
+
+<div class="w-1/2 max-w-xs flex flex-col sm:flex-row mt-4 sm:items-center"></div>
+  <label class="text-xl" for="password">Password</label>
+  <input
+    class="px-2 py-1 bg-transparent border-white border-2 mt-2  rounded "
+    name="password"
+
+</div>
+
+
+<button class="text-black hover:shadow-md text-xl rounded bg-blue-500 px-4 py-2 mt-8 " type="submit">Submit</button>
+</form>
+
+
+<script>
+const users="{{users | escapejs}}";
+const idField=document.querySelector('#studentID');
+const idError=document.querySelector('#studentID-error');
+idField.addEventListener('input',()=>{
+  idError.classList.add('hidden')
+  if (users.includes(idField.value)){
+    idError.classList.remove('hidden')
+  }
+})
+</script>
+{% endblock content %}

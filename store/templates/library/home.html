@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% block heading %} Books  {% endblock heading %}
+<!--  -->
+{% block content %}
+
+<h2>Book categories - {{ selected_category }}</h2>
+
+<ul class="filter-options">
+    <li><button  class="text-white hover:shadow-md text-xl rounded bg-red-500 px-4 py-1 mt-4 " ><a href="{% url 'filter_books' 'sci-fi' %}">Sci-Fi</a></button></li>
+    <li><button  class="text-white hover:shadow-md text-xl rounded bg-red-500 px-4 py-1 mt-4 " ><a href="{% url 'filter_books' 'fiction' %}">Fiction</a></button></li>
+    <li><button  class="text-white hover:shadow-md text-xl rounded bg-red-500 px-4 py-1 mt-4 " ><a href="{% url 'filter_books' 'comedy' %}">Comedy</a></button></li>
+</ul>
+
+<ul
+  class="mt-10 md:px-4 lg:px-12 xl:px-0 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4"
+>
+  {% for book in books %}
+  <li class="mb-12 md:mb-4 mx-auto text-center">
+
+    <div class="grid place-items-center p-2">
+      <img
+        src="{{book.image.url}}"
+        alt="{{book.name}}"
+        height="100"
+        width="100"
+        class="mb-4"
+      />
+      <h2 class="text-lg font-bold">{{book.name}}</h2>
+    </div>
+    {% if not user.is_superuser and not user.is_anonymous %}
+    <!--  -->
+
+    {% if book in issuedbooks %}
+    <p class="text-green-500 font-medium">issued</p>
+    {% elif book in requestedbooks %}
+    <p class="font-medium">issued requested</p>
+    {% else %}
+
+    <a
+      class="text-white hover:shadow-md rounded bg-blue-600 px-4 py-1"
+      href="/request-book-issue/{{book.id}}/"
+      >Request Issue</a
+    >
+    {% endif %} {% endif %} {% if user.is_superuser %}
+
+    {% endif %}
+  </li>
+
+  {% endfor %}
+</ul>
+
+
+{% endblock content %}
+
+
+<script type="text/javascript">
+        const categorySelect = document.getElementById('categoryOptions');
+        const sortingSelect = document.getElementById('sortingOptions');
+
+        categorySelect.addEventListener('change', updateProducts);
+        sortingSelect.addEventListener('change', updateProducts);
+
+        function updateProducts() {
+            const selectedCategory = categorySelect.value;
+            const selectedSorting = sortingSelect.value;
+
+            const url = `/products/?category=${selectedCategory}&sort=${selectedSorting}`;
+            window.location.href = url;
+        }
+    </script>
